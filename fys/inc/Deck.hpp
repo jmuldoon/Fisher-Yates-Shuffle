@@ -4,8 +4,12 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <random>
 
 #include "Card.hpp"
+
+#define MAX_DECK_SIZE 52
+
 
 class Deck{
 public:
@@ -13,7 +17,7 @@ public:
 	void PrintDeck();		// Prints the entire deck for verification
 	void RandShuffleDeck(); // Uses Algorithm/STD::Random_Shuffle
 	void FYShuffleDeck();	// Fisher-Yates Shuffle
-	void XORSwap();			// XOR Swap
+	void SwapElement(const std::vector<Card*>::iterator &, const std::vector<Card*>::iterator &);		// Swap elements based on iterators passed in
 
 private:
 	std::vector<Card*> pDeck;
@@ -33,8 +37,20 @@ void Deck::RandShuffleDeck(){
 	std::random_shuffle(pDeck.begin(),pDeck.end());
 }
 
-void Deck::XORSwap(){
-	
+void Deck::FYShuffleDeck(){
+	// Generate the random number genorator (engine)
+    std::random_device rd;	// Seed with a real random value, if available
+    std::mt19937 rng(rd());	// Use 32-bit Mersenne Twister by Matsumoto and Nishimura, 1998 Algorithm
+	std::uniform_int_distribution<int> u_dist(0,MAX_DECK_SIZE-1);	// Default range [0, MAX]
+
+	for(std::vector<Card*>::iterator i = pDeck.begin(), r = pDeck.begin(); i!=pDeck.end();++i){
+		r = pDeck.begin()+std::round(u_dist(rng));	// Determine next random index to swap
+		SwapElement(i, r); // Swap current index with the randomely generated index
+	}
+}
+
+void Deck::SwapElement(const std::vector<Card*>::iterator &it1, const std::vector<Card*>::iterator &it2){
+	std::iter_swap(it1,it2);
 }
 
 void Deck::PrintDeck(){
