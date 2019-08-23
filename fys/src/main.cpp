@@ -10,9 +10,13 @@ int main(void) {
     nDeck->RandShuffleDeck();
     nDeck->PrintDeck();
 
+    Deck *nFysDeck = new Deck();
+    std::cout<<"---\tGenerate Deck\t---"<<std::endl;
+    nFysDeck->PrintDeck();
+
     std::cout<<"---\tFisher-Yates Shuffle\t---"<<std::endl;
-    nDeck->FYShuffleDeck();
-    nDeck->PrintDeck();
+    nFysDeck->FYShuffleDeck();
+    nFysDeck->PrintDeck();
 
     return 0;
 }
